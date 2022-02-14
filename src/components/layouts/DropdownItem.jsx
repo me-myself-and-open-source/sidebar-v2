@@ -15,7 +15,7 @@ function DropdownItem({ tabName, icon }) {
 
 	const handleClick = () => {
 		setDropdown(dropdown => ({ open: !dropdown.open }))
-		//toggleTab(tabName)
+		dispatch(toggleTab(tabName))
 	}
 
 	const activeClass = "bg-gray-800 text-gray-200"
@@ -27,9 +27,10 @@ function DropdownItem({ tabName, icon }) {
 			<div className="relative">
 
 				{/* Dropdown Head */}
-				<div className={`flex text-gray-400 items-center hover:text-gray-200 hover:bg-gray-800 
-					space-x-2 rounded-md cursor-pointer justify-between 
-					${sidebar.full ? 'justify-start' : 'sm:justify-center'}`}
+				<div className={`flex items-center hover:text-gray-200 hover:bg-gray-800 
+					space-x-2 rounded-md cursor-pointer justify-between p-2 
+					${sidebar.full ? 'justify-start' : 'sm:justify-center'}
+					${sidebar.active === tabName ? 'text-gray-200 bg-gray-800' : 'text-gray-400'}`}
 					onClick={handleClick}>
 					<div className="relative flex space-x-2 items-center">
 						{icon}

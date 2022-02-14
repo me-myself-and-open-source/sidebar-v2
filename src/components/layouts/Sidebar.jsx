@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux"
-import { toggleSidebarFull } from "../../redux/sidebar/sidebarSlice"
+import { toggleSidebarFull, toggleTab } from "../../redux/sidebar/sidebarSlice"
 import DropdownItem from "./DropdownItem"
 import DropdownWithSubItems from "./DropdownWithSubItems"
 
@@ -29,8 +29,10 @@ function Sidebar() {
 					</button>
 
 					{/* Home */}
-					<div className={`relative flex text-gray-400 items-center hover:text-gray-200 hover:bg-gray-800 
-						space-x-2 rounded-md cursor-pointer ${sidebar.full ? 'justify-start' : 'sm:justify-center'}`}>
+					<div className={`relative flex items-center hover:text-gray-200 hover:bg-gray-800 
+						space-x-2 p-2 rounded-md cursor-pointer ${sidebar.full ? 'justify-start' : 'sm:justify-center'}
+						${sidebar.active === 'Home' ? 'text-gray-200 bg-gray-800' : 'text-gray-400'}
+						`} onClick={() => dispatch(toggleTab('Home'))}>
 
 						<svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24"
 							stroke="currentColor">
@@ -43,7 +45,7 @@ function Sidebar() {
 					</div>
 
 					{/* Audience */}
-					<DropdownItem tabName="Promote" icon={
+					<DropdownItem tabName="Audience" icon={
 						<svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24"
 							stroke="currentColor">
 							<path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"
@@ -53,8 +55,10 @@ function Sidebar() {
 
 					{/* Posts */}
 					<div className={`relative flex text-gray-400 items-center hover:text-gray-200 hover:bg-gray-800 
-						space-x-2 rounded-md cursor-pointer justify-between 
-						${sidebar.full ? 'justify-start' : 'sm:justify-center'}`}>
+						space-x-2 rounded-md cursor-pointer justify-between p-2 
+						${sidebar.full ? 'justify-start' : 'sm:justify-center'} 
+						${sidebar.active === 'Posts' ? 'text-gray-200 bg-gray-800' : 'text-gray-400'}`} 
+						onClick={() => dispatch(toggleTab('Posts'))}>
 
 						<div className="flex items-center space-x-2">
 
@@ -73,8 +77,10 @@ function Sidebar() {
 
 					{/* Schedules */}
 					<div className={`relative flex text-gray-400 items-center hover:text-gray-200 hover:bg-gray-800 
-						space-x-2 rounded-md cursor-pointer justify-between 
-						${sidebar.full ? 'justify-start' : 'sm:justify-center'}`}>
+						space-x-2 rounded-md cursor-pointer justify-between p-2 
+						${sidebar.full ? 'justify-start' : 'sm:justify-center'} 
+						${sidebar.active === 'Schedules' ? 'text-gray-200 bg-gray-800' : 'text-gray-400'}`} 
+						onClick={() => dispatch(toggleTab('Schedules'))}>
 
 						<div className="flex items-center space-x-2">
 
@@ -113,7 +119,7 @@ function Sidebar() {
 					}></DropdownWithSubItems>
 
 					{/* Promote */}
-					<DropdownItem tabName="Promote menu" icon={
+					<DropdownItem tabName="Promote" icon={
 						<svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24"
 							stroke="currentColor">
 							<path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"

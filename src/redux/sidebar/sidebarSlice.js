@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
     full: false,
-    active: 'home',
+    active: 'Home',
     navOpen: false
 }
 
@@ -16,11 +16,8 @@ export const sidebarSlice = createSlice({
         },
 
         toggleTab: (state, action) => {
+            console.log(action);
             state.active = action.payload
-        },
-
-        incrementByAmount: (state, action) => {
-            state.value += action.payload
         },
     },
 })

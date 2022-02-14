@@ -1,6 +1,7 @@
 import { useState } from "react"
 import ClickAwayListener from "react-click-away-listener"
 import { useDispatch, useSelector } from "react-redux"
+import { toggleTab } from "../../redux/sidebar/sidebarSlice"
 
 function DropdownWithSubItems({ tabName, icon }) {
 
@@ -14,7 +15,7 @@ function DropdownWithSubItems({ tabName, icon }) {
 
 	const handleClick = () => {
 		setDropdown(dropdown => ({ open: !dropdown.open }))
-		//toggleTab(tabName)
+		dispatch(toggleTab(tabName))
 	}
 
 	const activeClass = "bg-gray-800 text-gray-200"
@@ -27,8 +28,9 @@ function DropdownWithSubItems({ tabName, icon }) {
 
 				{/* Dropdown Head */}
 				<div className={`flex text-gray-400 items-center hover:text-gray-200 hover:bg-gray-800 
-					space-x-2 rounded-md cursor-pointer justify-between 
-					${sidebar.full ? 'justify-start' : 'sm:justify-center'}`}
+					space-x-2 rounded-md cursor-pointer justify-between p-2 
+					${sidebar.full ? 'justify-start' : 'sm:justify-center'} 
+					${sidebar.active === tabName ? 'text-gray-200 bg-gray-800' : 'text-gray-400'}`}
 				>
 					<div className="relative flex space-x-2 items-center">
 						<svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24"
