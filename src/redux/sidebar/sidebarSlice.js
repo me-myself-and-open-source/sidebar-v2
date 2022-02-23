@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
     full: false,
-    active: 'Home',
+    active: 'Dashboard',
     navOpen: false
 }
 

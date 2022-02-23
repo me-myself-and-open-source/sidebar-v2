@@ -1,9 +1,10 @@
+import { Transition } from "@headlessui/react"
 import { useState } from "react"
 import ClickAwayListener from "react-click-away-listener"
 import { useDispatch, useSelector } from "react-redux"
 import { toggleTab } from "../../redux/sidebar/sidebarSlice"
 
-function DropdownItem({ tabName, icon }) {
+function DropdownItem({ tabName, icon, dropdownContent, extraLabel }) {
 
 	const sidebar = useSelector((state) => state.sidebar)
 
@@ -34,26 +35,44 @@ function DropdownItem({ tabName, icon }) {
 					onClick={handleClick}>
 					<div className="relative flex space-x-2 items-center">
 						{icon}
-						<h1 className={`${!sidebar.full && 'sm:hidden'}`}>{tabName}</h1>
+						<Transition show={sidebar.full}
+							enter="duration-300 ease-out"
+							enterFrom="opacity-0 scale-95"
+							enterTo="opacity-100 scale-100"
+							leave="duration-100 ease-in"
+							leaveFrom="opacity-100 scale-100"
+							leaveTo="opacity-0 scale-95">
+
+							<h1 >{tabName}</h1>
+
+						</Transition>
 					</div>
-					<svg xmlns="http://www.w3.org/2000/svg"
-						className={`h-4 w-4 ${!sidebar.full && ''}`}
-						viewBox="0 0 20 20" fill="currentColor">
-						<path fillRule="evenodd"
-							d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-							clipRule="evenodd" />
-					</svg>
+					{
+						extraLabel &&
+						<h1 className={`w-5 h-5 p-1 ${extraLabel.color} rounded-sm text-sm leading-3 text-center text-gray-900 ${!sidebar.full && 'sm:hidden'}`}>{extraLabel.count}</h1>
+					}
+
+
+					{/* Dropdown Arrow Icon */}
+					{
+						dropdownContent &&
+						<svg xmlns="http://www.w3.org/2000/svg"
+							className={`h-4 w-4 ${!sidebar.full && ''}`}
+							viewBox="0 0 20 20" fill="currentColor">
+							<path fillRule="evenodd"
+								d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+								clipRule="evenodd" />
+						</svg>
+					}
+
 				</div>
 				{/* Dropdown Content */}
 				{
-					dropdown.open &&
-					<ClickAwayListener onClickAway={() => setDropdown({active: false})}>
+					(dropdownContent && dropdown.open) &&
+					<ClickAwayListener onClickAway={() => setDropdown({ active: false })}>
 
 						<div className={`text-gray-400 space-y-3 ${sidebar.full ? expandedClass : shrinkedClass}`}>
-							<h1 className="hover:text-gray-200 cursor-pointer">Item 1</h1>
-							<h1 className="hover:text-gray-200 cursor-pointer">Item 2</h1>
-							<h1 className="hover:text-gray-200 cursor-pointer">Item 3</h1>
-							<h1 className="hover:text-gray-200 cursor-pointer">Item 4</h1>
+							{dropdownContent}
 						</div>
 
 					</ClickAwayListener>
