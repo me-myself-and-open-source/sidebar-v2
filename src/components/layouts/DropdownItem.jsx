@@ -25,21 +25,21 @@ function DropdownItem({ tabName, icon, dropdownContent, extraLabel }) {
 		dispatch(toggleTab(tabName))
 	}
 
-	const visibleClass = "block sm:absolute sm:border border-gray-800 left-10 sm:text-sm sm:bg-gray-900 sm:px-2 sm:py-1 sm:rounded"
+	const visibleClass = "block sm:absolute sm:border border-sebg-secondary left-10 sm:text-sm sm:bg-primary sm:px-2 sm:py-1 sm:rounded"
 
-	const activeClass = "bg-gray-800 text-gray-200"
+	const activeClass = "bg-secondary text-gray-200"
 	const expandedClass = "border-l border-gray-400 text-gray-200 ml-4 pl-4"
-	const shrinkedClass = "sm:absolute top-0 left-20 sm:shadow-md sm:z-10 sm:bg-gray-900 sm:rounded-md sm:p-4 border-l sm:border-none border-gray-400 ml-4 pl-4 sm:ml-0 w-28"
+	const shrinkedClass = "sm:absolute top-0 left-20 sm:shadow-md sm:z-10 sm:bg-primary sm:rounded-md sm:p-4 border-l sm:border-none border-gray-400 ml-4 pl-4 sm:ml-0 w-28"
 
 	return (
 		<>
 			<div className="relative">
 
 				{/* Dropdown Head */}
-				<div className={`flex items-center hover:text-gray-200 hover:bg-gray-800 
+				<div className={`flex items-center hover:text-gray-200 hover:bg-secondary 
 					space-x-2 rounded-md cursor-pointer justify-between p-2 
 					${sidebar.full ? 'justify-start' : 'sm:justify-center'}
-					${sidebar.active === tabName ? activeClass : 'text-gray-400'}`}
+					${sidebar.active === tabName ? activeClass : 'text-inactive'}`}
 					onClick={handleClick} 
 					onMouseEnter={() => setTooltip({show: true})}
 					onMouseLeave={() => setTooltip({show: false})}>
@@ -64,7 +64,7 @@ function DropdownItem({ tabName, icon, dropdownContent, extraLabel }) {
 					</div>
 					{
 						extraLabel &&
-						<h1 className={`w-5 h-5 p-1 ${extraLabel.color} rounded-sm text-sm leading-3 text-center text-gray-900 ${!sidebar.full && 'sm:hidden'}`}>{extraLabel.count}</h1>
+						<h1 className={`w-5 h-5 p-1 ${extraLabel.color} rounded-sm text-sm leading-3 text-center text-gray-200 ${!sidebar.full && 'sm:hidden'}`}>{extraLabel.count}</h1>
 					}
 
 
@@ -86,7 +86,7 @@ function DropdownItem({ tabName, icon, dropdownContent, extraLabel }) {
 					(dropdownContent && dropdown.open) &&
 					<ClickAwayListener onClickAway={() => setDropdown({ active: false })}>
 
-						<div className={`text-gray-400 space-y-3 ${sidebar.full ? expandedClass : shrinkedClass}`}>
+						<div className={`text-inactive space-y-3 ${sidebar.full ? expandedClass : shrinkedClass}`}>
 							{dropdownContent}
 						</div>
 

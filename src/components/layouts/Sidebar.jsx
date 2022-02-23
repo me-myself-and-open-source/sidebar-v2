@@ -34,7 +34,7 @@ function Sidebar() {
 
 			</button>
 
-			<div className={`h-screen bg-gray-900 transition-all duration-300 space-y-2 fixed sm:relative 
+			<div className={`h-screen bg-primary transition-all duration-300 space-y-2 fixed sm:relative 
 				${sidebar.full ? 'w-64' : 'w-64 sm:w-20'} 
 				${sidebar.navOpen ? 'top-0 left-0' : 'top-0 -left-64 sm:left-0 '} `}>
 
@@ -44,7 +44,7 @@ function Sidebar() {
 
 					{/* Sidebar Toggle */}
 					<button onClick={() => dispatch(toggleSidebarFull())}
-						className="hidden sm:block focus:outline-none absolute p-1 -right-3 top-10 bg-gray-900 rounded-full shadow-md">
+						className="hidden sm:block focus:outline-none absolute p-1 -right-3 top-10 bg-primary rounded-full shadow-md">
 						<svg xmlns="http://www.w3.org/2000/svg"
 							className={`h-4 w-4 transition-all duration-300 text-white transform ${sidebar.full ? 'rotate-90' : '-rotate-90'}`}
 							fill="none" viewBox="0 0 20 20" stroke="currentColor">
@@ -84,7 +84,7 @@ function Sidebar() {
 							<path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"
 								d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
 						</svg>
-					} extraLabel={{ count: 8, color: 'bg-green-400' }} />
+					} extraLabel={{ count: 8, color: 'bg-indigo-700' }} />
 
 					{/* Schedules */}
 					<DropdownItem tabName="Schedules" icon={
@@ -93,7 +93,7 @@ function Sidebar() {
 							<path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"
 								d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
 						</svg>
-					} extraLabel={{ count: 4, color: 'bg-pink-400' }} />
+					} extraLabel={{ count: 4, color: 'bg-pink-600' }} />
 
 					{/* Promote */}
 					<DropdownItem tabName="Promote" icon={
