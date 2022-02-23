@@ -8,30 +8,47 @@ function DropdownWithSubItems({ tabName, icon }) {
 	const sidebar = useSelector((state) => state.sidebar)
 
 	const [dropdown, setDropdown] = useState({
-		open: false
+		open: false,
+		subOpen: false
 	})
 
 	const dispatch = useDispatch()
 
 	const handleClick = () => {
-		setDropdown(dropdown => ({ open: !dropdown.open }))
+		setDropdown(dropdown => ({ ...dropdown, open: !dropdown.open }))
 		dispatch(toggleTab(tabName))
+	}
+
+	const closeDropdown = () => {
+		setDropdown(dropdown => ({ ...dropdown, open: false }))
+	}
+
+	const toggleSub = () => {
+		setDropdown(dropdown => ({ ...dropdown, subOpen: !dropdown.subOpen }))
+	}
+
+	const closeSubDropdown = () => {
+		setDropdown(dropdown => ({ ...dropdown, subOpen: false }))
+		
 	}
 
 	const activeClass = "bg-gray-800 text-gray-200"
 	const expandedClass = "border-l border-gray-400 text-gray-200 ml-4 pl-4"
 	const shrinkedClass = "sm:absolute top-0 left-20 sm:shadow-md sm:z-10 sm:bg-gray-900 sm:rounded-md sm:p-4 border-l sm:border-none border-gray-400 ml-4 pl-4 sm:ml-0 w-28"
 
+	const subExpandedClass = "border-l border-gray-400 text-gray-200 ml-4 pl-4"
+	const subShrinkedClass = "sm:absolute top-0 left-28 sm:shadow-md sm:z-10 sm:bg-gray-900 sm:rounded-md sm:p-4 border-l sm:border-none border-gray-400 ml-4 pl-4 sm:ml-0 w-28"
+
 	return (
 		<>
-			<div className="relative" onClick={handleClick}>
+			<div className="relative" >
 
 				{/* Dropdown Head */}
 				<div className={`flex text-gray-400 items-center hover:text-gray-200 hover:bg-gray-800 
 					space-x-2 rounded-md cursor-pointer justify-between p-2 
 					${sidebar.full ? 'justify-start' : 'sm:justify-center'} 
 					${sidebar.active === tabName ? 'text-gray-200 bg-gray-800' : 'text-gray-400'}`}
-				>
+					onClick={handleClick}>
 					<div className="relative flex space-x-2 items-center">
 						<svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24"
 							stroke="currentColor">
@@ -40,7 +57,7 @@ function DropdownWithSubItems({ tabName, icon }) {
 							<path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"
 								d="M20.488 9H15V3.512A9.025 9.025 0 0120.488 9z" />
 						</svg>
-						<h1 className={`${!sidebar.full && 'hidden'}`}>Income</h1>
+						<h1 className={`${!sidebar.full && 'sm:hidden'}`}>Income</h1>
 					</div>
 					<svg xmlns="http://www.w3.org/2000/svg"
 						className={`h-4 w-4 ${!sidebar.full && 'hidden'}`}
@@ -53,14 +70,14 @@ function DropdownWithSubItems({ tabName, icon }) {
 				{/* Dropdown Content */}
 				{
 					dropdown.open &&
-					<ClickAwayListener onClickAway={() => setDropdown({ active: false })}>
+					<ClickAwayListener onClickAway={closeDropdown}>
 						<div className={`text-gray-400 space-y-3 ${sidebar.full ? expandedClass : shrinkedClass}`}>
 							<div className="text-gray-400 space-y-3">
 								<h1 className="hover:text-gray-200 cursor-pointer">Item 1</h1>
 								<h1 className="hover:text-gray-200 cursor-pointer">Item 2</h1>
 								{/* Sub Dropdown */}
 								<div className="relative w-full">
-									<div className="flex items-center justify-between cursor-pointer">
+									<div onClick={toggleSub} className="flex items-center justify-between cursor-pointer">
 										<h1 className="hover:text-gray-200 cursor-pointer">Item 3</h1>
 										<svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20"
 											fill="currentColor">
@@ -69,11 +86,18 @@ function DropdownWithSubItems({ tabName, icon }) {
 												clipRule="evenodd" />
 										</svg>
 									</div>
-									<div>
-										<h1 className="hover:text-gray-200 cursor-pointer">Sub Item 1</h1>
-										<h1 className="hover:text-gray-200 cursor-pointer">Sub Item 2</h1>
-										<h1 className="hover:text-gray-200 cursor-pointer">Sub Item 3</h1>
-									</div>
+									{
+										dropdown.subOpen &&
+										<ClickAwayListener onClickAway={closeSubDropdown}>
+											<div className={`${sidebar.full ? subExpandedClass : subShrinkedClass}`}>
+												<h1 className="hover:text-gray-200 cursor-pointer">Sub Item 1</h1>
+												<h1 className="hover:text-gray-200 cursor-pointer">Sub Item 2</h1>
+												<h1 className="hover:text-gray-200 cursor-pointer">Sub Item 3</h1>
+											</div>
+										</ClickAwayListener>
+
+									}
+
 								</div>
 								<h1 className="hover:text-gray-200 cursor-pointer">Item 4</h1>
 							</div>

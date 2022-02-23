@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux"
-import { toggleSidebarFull, toggleTab } from "../../redux/sidebar/sidebarSlice"
+import { toggleNavOpen, toggleSidebarFull, toggleTab } from "../../redux/sidebar/sidebarSlice"
 import DropdownItem from "./DropdownItem"
 import DropdownWithSubItems from "./DropdownWithSubItems"
 
@@ -10,6 +10,31 @@ function Sidebar() {
 
 	return (
 		<>
+			{/* Mobile Menu Toggle */}
+			<button className="sm:hidden absolute top-5 right-5 focus:outline-none" 
+				onClick={() => dispatch(toggleNavOpen())}>
+				{/* Menu Icon */}
+				{
+					!sidebar.navOpen &&
+					<svg xmlns="http://www.w3.org/2000/svg"
+						className="h-6 w-6"
+						fill="none" viewBox="0 0 24 24" stroke="currentColor">
+						<path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16m-7 6h7" />
+					</svg>
+				}
+
+				{/* Menu close */}
+				{
+					sidebar.navOpen &&
+					<svg xmlns="http://www.w3.org/2000/svg"
+						className="h-6 w-6"
+						fill="none" viewBox="0 0 24 24" stroke="currentColor">
+						<path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
+					</svg>
+				}
+
+			</button>
+
 			<div className={`h-screen bg-gray-900 transition-all duration-300 space-y-2 fixed sm:relative 
 				${sidebar.full ? 'w-64' : 'w-64 sm:w-20'} 
 				${sidebar.navOpen ? 'top-0 left-0' : 'top-0 -left-64 sm:left-0 '} `}>
@@ -40,7 +65,7 @@ function Sidebar() {
 								d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
 						</svg>
 
-						<h1 className={`${!sidebar.full && 'hidden'}`}>Dashboard</h1>
+						<h1 className={`${!sidebar.full && 'sm:hidden'}`}>Dashboard</h1>
 
 					</div>
 
@@ -57,7 +82,7 @@ function Sidebar() {
 					<div className={`relative flex text-gray-400 items-center hover:text-gray-200 hover:bg-gray-800 
 						space-x-2 rounded-md cursor-pointer justify-between p-2 
 						${sidebar.full ? 'justify-start' : 'sm:justify-center'} 
-						${sidebar.active === 'Posts' ? 'text-gray-200 bg-gray-800' : 'text-gray-400'}`} 
+						${sidebar.active === 'Posts' ? 'text-gray-200 bg-gray-800' : 'text-gray-400'}`}
 						onClick={() => dispatch(toggleTab('Posts'))}>
 
 						<div className="flex items-center space-x-2">
@@ -68,10 +93,10 @@ function Sidebar() {
 									d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
 							</svg>
 
-							<h1 className={`${!sidebar.full && 'hidden'}`}>Posts</h1>
+							<h1 className={`${!sidebar.full && 'sm:hidden'}`}>Posts</h1>
 
 						</div>
-						<h1 className={`w-5 h-5 p-1 bg-green-400 rounded-sm text-sm leading-3 text-center text-gray-900 ${!sidebar.full && 'hidden'}`}>8</h1>
+						<h1 className={`w-5 h-5 p-1 bg-green-400 rounded-sm text-sm leading-3 text-center text-gray-900 ${!sidebar.full && 'sm:hidden'}`}>8</h1>
 
 					</div>
 
@@ -79,7 +104,7 @@ function Sidebar() {
 					<div className={`relative flex text-gray-400 items-center hover:text-gray-200 hover:bg-gray-800 
 						space-x-2 rounded-md cursor-pointer justify-between p-2 
 						${sidebar.full ? 'justify-start' : 'sm:justify-center'} 
-						${sidebar.active === 'Schedules' ? 'text-gray-200 bg-gray-800' : 'text-gray-400'}`} 
+						${sidebar.active === 'Schedules' ? 'text-gray-200 bg-gray-800' : 'text-gray-400'}`}
 						onClick={() => dispatch(toggleTab('Schedules'))}>
 
 						<div className="flex items-center space-x-2">
@@ -90,10 +115,10 @@ function Sidebar() {
 									d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
 							</svg>
 
-							<h1 className={`${!sidebar.full && 'hidden'}`}>Schedules</h1>
+							<h1 className={`${!sidebar.full && 'sm:hidden'}`}>Schedules</h1>
 
 						</div>
-						<div className={`flex items-center space-x-2 ${!sidebar.full && 'hidden'}`}>
+						<div className={`flex items-center space-x-2 ${!sidebar.full && 'sm:hidden'}`}>
 
 							<svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24"
 								stroke="currentColor">

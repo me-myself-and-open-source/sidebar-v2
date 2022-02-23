@@ -16,13 +16,16 @@ export const sidebarSlice = createSlice({
         },
 
         toggleTab: (state, action) => {
-            console.log(action);
             state.active = action.payload
         },
+
+        toggleNavOpen: (state) => {
+            state.navOpen = !state.navOpen
+        }
     },
 })
 
 // Action creators are generated for each case reducer function
-export const { toggleSidebarFull, toggleTab } = sidebarSlice.actions
+export const { toggleSidebarFull, toggleTab, toggleNavOpen } = sidebarSlice.actions
 
 export default sidebarSlice.reducer
