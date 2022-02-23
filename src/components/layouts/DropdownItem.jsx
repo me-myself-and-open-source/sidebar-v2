@@ -12,12 +12,20 @@ function DropdownItem({ tabName, icon, dropdownContent, extraLabel }) {
 		open: false
 	})
 
+	const [tooltip, setTooltip] = useState({
+		show: false
+	})
+
 	const dispatch = useDispatch()
 
 	const handleClick = () => {
-		setDropdown(dropdown => ({ open: !dropdown.open }))
+		if (dropdownContent) {
+			setDropdown(dropdown => ({ open: !dropdown.open }))
+		}
 		dispatch(toggleTab(tabName))
 	}
+
+	const visibleClass = "block sm:absolute sm:border border-gray-800 left-10 sm:text-sm sm:bg-gray-900 sm:px-2 sm:py-1 sm:rounded"
 
 	const activeClass = "bg-gray-800 text-gray-200"
 	const expandedClass = "border-l border-gray-400 text-gray-200 ml-4 pl-4"
@@ -31,8 +39,10 @@ function DropdownItem({ tabName, icon, dropdownContent, extraLabel }) {
 				<div className={`flex items-center hover:text-gray-200 hover:bg-gray-800 
 					space-x-2 rounded-md cursor-pointer justify-between p-2 
 					${sidebar.full ? 'justify-start' : 'sm:justify-center'}
-					${sidebar.active === tabName ? 'text-gray-200 bg-gray-800' : 'text-gray-400'}`}
-					onClick={handleClick}>
+					${sidebar.active === tabName ? activeClass : 'text-gray-400'}`}
+					onClick={handleClick} 
+					onMouseEnter={() => setTooltip({show: true})}
+					onMouseLeave={() => setTooltip({show: false})}>
 					<div className="relative flex space-x-2 items-center">
 						{icon}
 						<Transition show={sidebar.full}
@@ -43,9 +53,14 @@ function DropdownItem({ tabName, icon, dropdownContent, extraLabel }) {
 							leaveFrom="opacity-100 scale-100"
 							leaveTo="opacity-0 scale-95">
 
-							<h1 >{tabName}</h1>
+							<h1>{tabName}</h1>
 
 						</Transition>
+						{
+							(!sidebar.full && !dropdown.open) &&
+							<h1 className={`${tooltip.show ? visibleClass : 'sm:hidden'}`}>{tabName}</h1>
+
+						}
 					</div>
 					{
 						extraLabel &&
@@ -57,7 +72,7 @@ function DropdownItem({ tabName, icon, dropdownContent, extraLabel }) {
 					{
 						dropdownContent &&
 						<svg xmlns="http://www.w3.org/2000/svg"
-							className={`h-4 w-4 ${!sidebar.full && ''}`}
+							className={`h-4 w-4 ${!sidebar.full && 'sm:hidden'}`}
 							viewBox="0 0 20 20" fill="currentColor">
 							<path fillRule="evenodd"
 								d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"

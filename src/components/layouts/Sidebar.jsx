@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux"
-import { toggleNavOpen, toggleSidebarFull, toggleTab } from "../../redux/sidebar/sidebarSlice"
+import { toggleNavOpen, toggleSidebarFull } from "../../redux/sidebar/sidebarSlice"
 import DropdownItem from "./DropdownItem"
 
 function Sidebar() {
