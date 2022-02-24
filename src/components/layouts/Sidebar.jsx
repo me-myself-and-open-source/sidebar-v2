@@ -35,12 +35,12 @@ function Sidebar() {
 			</button>
 
 			<div className={`h-screen bg-primary transition-all duration-300 space-y-2 fixed sm:relative 
-				${sidebar.full ? 'w-64' : 'w-64 sm:w-20'} 
+				${sidebar.full ? 'w-64' : 'w-64 sm:w-14'} 
 				${sidebar.navOpen ? 'top-0 left-0' : 'top-0 -left-64 sm:left-0 '} `}>
 
-				<h1 className={`font-black text-white py-4 ${sidebar.full ? 'text-2xl px-4' : 'text-xl px-4 sm:px-2'}`}>LOGO</h1>
+				<h1 className={`font-black text-white py-4 ${sidebar.full ? 'text-3xl px-4' : 'text-sm px-4 sm:px-2'}`}>LOGO</h1>
 
-				<div className="px-4 space-y-2">
+				<div className="px-2 space-y-2">
 
 					{/* Sidebar Toggle */}
 					<button onClick={() => dispatch(toggleSidebarFull())}
