@@ -4,7 +4,7 @@ import ClickAwayListener from "react-click-away-listener"
 import { useDispatch, useSelector } from "react-redux"
 import { toggleTab } from "../../redux/sidebar/sidebarSlice"
 
-function DropdownItem({ tabName, icon, dropdownContent, extraLabel }) {
+function DropdownItem({ tabName, icon, dropdownContent = null, extraLabel }) {
 
 	const sidebar = useSelector((state) => state.sidebar)
 
@@ -40,9 +40,9 @@ function DropdownItem({ tabName, icon, dropdownContent, extraLabel }) {
 					space-x-2 rounded-md cursor-pointer justify-between p-2 
 					${sidebar.full ? 'justify-start' : 'sm:justify-center'}
 					${sidebar.active === tabName ? activeClass : 'text-gray-100'}`}
-					onClick={handleClick} 
-					onMouseEnter={() => setTooltip({show: true})}
-					onMouseLeave={() => setTooltip({show: false})}>
+					onClick={handleClick}
+					onMouseEnter={() => setTooltip({ show: true })}
+					onMouseLeave={() => setTooltip({ show: false })}>
 					<div className="relative flex space-x-2 items-center">
 						{icon}
 						<Transition show={sidebar.full}
@@ -64,7 +64,16 @@ function DropdownItem({ tabName, icon, dropdownContent, extraLabel }) {
 					</div>
 					{
 						extraLabel &&
-						<h1 className={`w-5 h-5 p-1 ${extraLabel.color} rounded-sm text-sm leading-3 text-center text-gray-200 ${!sidebar.full && 'sm:hidden'}`}>{extraLabel.count}</h1>
+						<Transition show={sidebar.full}
+							enter="duration-700 ease-out"
+							enterFrom="opacity-0 scale-0"
+							enterTo="opacity-100 scale-100"
+							leave="duration-100 ease-in"
+							leaveFrom="opacity-100 scale-100"
+							leaveTo="opacity-0 scale-95">
+
+							<h1 className={`w-5 h-5 p-1 ${extraLabel.color} rounded-sm text-sm leading-3 text-center text-gray-200 ${!sidebar.full && 'sm:hidden'}`}>{extraLabel.count}</h1>
+						</Transition>
 					}
 
 
@@ -83,14 +92,24 @@ function DropdownItem({ tabName, icon, dropdownContent, extraLabel }) {
 				</div>
 				{/* Dropdown Content */}
 				{
-					(dropdownContent && dropdown.open) &&
-					<ClickAwayListener onClickAway={() => setDropdown({ active: false })}>
+					(dropdownContent) &&
 
-						<div className={`text-gray-100 space-y-3 ${sidebar.full ? expandedClass : shrinkedClass}`}>
-							{dropdownContent}
-						</div>
+					<Transition show={dropdown.open ?? false}
+						enter="duration-300 ease-out"
+						enterFrom="opacity-0 scale-50"
+						enterTo="opacity-100 scale-100"
+						leave="duration-100 ease-in"
+						leaveFrom="opacity-100 scale-100"
+						leaveTo="opacity-0 scale-50">
 
-					</ClickAwayListener>
+						<ClickAwayListener onClickAway={() => setDropdown({ active: false })}>
+							<div className={`text-gray-100 space-y-3 ${sidebar.full ? expandedClass : shrinkedClass}`}>
+								{dropdownContent}
+							</div>
+
+						</ClickAwayListener>
+					</Transition>
+
 				}
 
 
