@@ -39,7 +39,7 @@ function DropdownItem({ tabName, icon, dropdownContent, extraLabel }) {
 				<div className={`flex items-center hover:text-gray-200 hover:bg-secondary 
 					space-x-2 rounded-md cursor-pointer justify-between p-2 
 					${sidebar.full ? 'justify-start' : 'sm:justify-center'}
-					${sidebar.active === tabName ? activeClass : 'text-inactive'}`}
+					${sidebar.active === tabName ? activeClass : 'text-gray-100'}`}
 					onClick={handleClick} 
 					onMouseEnter={() => setTooltip({show: true})}
 					onMouseLeave={() => setTooltip({show: false})}>
@@ -86,7 +86,7 @@ function DropdownItem({ tabName, icon, dropdownContent, extraLabel }) {
 					(dropdownContent && dropdown.open) &&
 					<ClickAwayListener onClickAway={() => setDropdown({ active: false })}>
 
-						<div className={`text-inactive space-y-3 ${sidebar.full ? expandedClass : shrinkedClass}`}>
+						<div className={`text-gray-100 space-y-3 ${sidebar.full ? expandedClass : shrinkedClass}`}>
 							{dropdownContent}
 						</div>
 
