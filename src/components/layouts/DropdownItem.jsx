@@ -2,9 +2,10 @@ import { Transition } from "@headlessui/react"
 import { useState } from "react"
 import ClickAwayListener from "react-click-away-listener"
 import { useDispatch, useSelector } from "react-redux"
+import { toggleIsDarkMode } from "../../redux/darkMode/darkMode"
 import { toggleTab } from "../../redux/sidebar/sidebarSlice"
 
-function DropdownItem({ tabName, icon, dropdownContent = null, extraLabel }) {
+function DropdownItem({ tabName, icon, dropdownContent = null, extraLabel, darkModeToggle = false }) {
 
 	const sidebar = useSelector((state) => state.sidebar)
 
@@ -19,27 +20,36 @@ function DropdownItem({ tabName, icon, dropdownContent = null, extraLabel }) {
 	const dispatch = useDispatch()
 
 	const handleClick = () => {
-		if (dropdownContent) {
-			setDropdown(dropdown => ({ open: !dropdown.open }))
+
+		if (darkModeToggle) {
+
+			dispatch(toggleIsDarkMode())
+
+		} else {
+
+			if (dropdownContent) {
+				setDropdown(dropdown => ({ open: !dropdown.open }))
+			}
+			dispatch(toggleTab(tabName))
 		}
-		dispatch(toggleTab(tabName))
+
 	}
 
-	const visibleClass = "block sm:absolute sm:border border-sebg-secondary left-10 sm:text-sm sm:bg-primary sm:px-2 sm:py-1 sm:rounded"
+	const visibleClass = "block sm:absolute sm:border border-bg-light-secondary dark:border-bg-dark-secondary left-10 sm:text-sm sm:bg-light-primary sm:dark:bg-dark-primary sm:px-2 sm:py-1 sm:rounded"
 
-	const activeClass = "bg-secondary text-gray-200"
-	const expandedClass = "border-l border-gray-400 text-gray-200 ml-4 pl-4"
-	const shrinkedClass = "sm:absolute top-0 left-20 sm:shadow-md sm:z-10 sm:bg-primary sm:rounded-md sm:p-4 border-l sm:border-none border-gray-400 ml-4 pl-4 sm:ml-0 w-28"
+	const activeClass = "bg-light-secondary text-light-active dark:bg-dark-secondary dark:text-dark-active"
+	const expandedClass = "border-l border-light-secondary dark:border-dark-secondary text-light-active dark:text-dark-active ml-4 pl-4"
+	const shrinkedClass = "sm:absolute top-0 left-20 sm:shadow-md sm:z-10 sm:bg-light-primary sm:dark:bg-dark-primary sm:rounded-md sm:p-4 border-l sm:border-none border-light-secondary dark:border-dark-secondary ml-4 pl-4 sm:ml-0 w-28"
 
 	return (
 		<>
 			<div className="relative">
 
 				{/* Dropdown Head */}
-				<div className={`flex items-center hover:text-gray-200 hover:bg-secondary 
+				<div className={`flex items-center hover:text-light-active hover:bg-light-secondary hover:dark:text-dark-active hover:dark:bg-dark-secondary 
 					space-x-2 rounded-md cursor-pointer justify-between p-2 
 					${sidebar.full ? 'justify-start' : 'sm:justify-center'}
-					${sidebar.active === tabName ? activeClass : 'text-gray-100'}`}
+					${sidebar.active === tabName ? activeClass : 'text-light-inactive dark:text-dark-inactive'}`}
 					onClick={handleClick}
 					onMouseEnter={() => setTooltip({ show: true })}
 					onMouseLeave={() => setTooltip({ show: false })}>
@@ -72,7 +82,7 @@ function DropdownItem({ tabName, icon, dropdownContent = null, extraLabel }) {
 							leaveFrom="opacity-100 scale-100"
 							leaveTo="opacity-0 scale-95">
 
-							<h1 className={`w-5 h-5 p-1 ${extraLabel.color} rounded-sm text-sm leading-3 text-center text-gray-200 ${!sidebar.full && 'sm:hidden'}`}>{extraLabel.count}</h1>
+							<h1 className={`w-5 h-5 p-1 ${extraLabel.color} rounded-sm text-sm leading-3 text-center text-light-active dark:text-dark-active ${!sidebar.full && 'sm:hidden'}`}>{extraLabel.count}</h1>
 						</Transition>
 					}
 
@@ -103,7 +113,7 @@ function DropdownItem({ tabName, icon, dropdownContent = null, extraLabel }) {
 						leaveTo="opacity-0 scale-50">
 
 						<ClickAwayListener onClickAway={() => setDropdown({ active: false })}>
-							<div className={`text-gray-100 space-y-3 ${sidebar.full ? expandedClass : shrinkedClass}`}>
+							<div className={`text-light-inactive dark:text-dark-inactive space-y-3 ${sidebar.full ? expandedClass : shrinkedClass}`}>
 								{dropdownContent}
 							</div>
 

@@ -2,11 +2,12 @@ import { useDispatch, useSelector } from "react-redux"
 import { toggleNavOpen, toggleSidebarFull } from "../../redux/sidebar/sidebarSlice"
 import DropdownItem from "./DropdownItem"
 
-import { HomeIcon, BookmarkIcon, EyeIcon, CollectionIcon, ShareIcon } from '@heroicons/react/solid'
+import { HomeIcon, BookmarkIcon, EyeIcon, CollectionIcon, ShareIcon, SunIcon, MoonIcon } from '@heroicons/react/solid'
 
 function Sidebar() {
 
 	const sidebar = useSelector((state) => state.sidebar)
+	const darkMode = useSelector((state) => state.darkMode)
 	const dispatch = useDispatch()
 
 	return (
@@ -36,7 +37,7 @@ function Sidebar() {
 
 			</button>
 
-			<div className={`h-screen bg-primary transition-all duration-300 space-y-2 fixed sm:relative 
+			<div className={`h-screen bg-light-primary dark:bg-dark-primary transition-all duration-300 space-y-2 fixed sm:relative 
 				${sidebar.full ? 'w-64' : 'w-64 sm:w-14'} 
 				${sidebar.navOpen ? 'top-0 left-0' : 'top-0 -left-64 sm:left-0 '} `}>
 
@@ -46,7 +47,7 @@ function Sidebar() {
 
 					{/* Sidebar Toggle */}
 					<button onClick={() => dispatch(toggleSidebarFull())}
-						className="hidden sm:block focus:outline-none absolute p-1 -right-3 top-10 bg-primary rounded-full shadow-md">
+						className="hidden sm:block focus:outline-none absolute p-1 -right-3 top-10 bg-light-primary dark:bg-dark-primary rounded-full shadow-md">
 						<svg xmlns="http://www.w3.org/2000/svg"
 							className={`h-4 w-4 transition-all duration-300 text-white transform ${sidebar.full ? 'rotate-90' : '-rotate-90'}`}
 							fill="none" viewBox="0 0 20 20" stroke="currentColor">
@@ -91,6 +92,16 @@ function Sidebar() {
 							<h1 className="hover:text-gray-200 cursor-pointer">Item 3</h1>
 							<h1 className="hover:text-gray-200 cursor-pointer">Item 4</h1>
 						</>
+					} />
+
+					<DropdownItem darkModeToggle={true} tabName={
+						`${darkMode.isDarkMode
+							? 'Light'
+							: 'Dark'} Mode`
+					} icon={
+						darkMode.isDarkMode
+							? <SunIcon className="h-6 w-6" />
+							: <MoonIcon className="h-6 w-6" />
 					} />
 
 				</div>

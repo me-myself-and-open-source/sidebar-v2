@@ -1,9 +1,14 @@
 import Sidebar from "./components/layouts/Sidebar";
+import useDarkmode from "./hooks/useDarkMode";
 
 function App() {
-  return (
-	  <Sidebar/>
-  );
+	useDarkmode();
+	return (
+		<div className="">
+
+			<Sidebar />
+		</div>
+	);
 }
 
 export default App;
